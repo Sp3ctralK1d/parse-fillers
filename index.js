@@ -59,4 +59,5 @@ async function fillCategories() {
     }
 }
 
-fillProducts()
+fillCategories()
+// fillProducts()
