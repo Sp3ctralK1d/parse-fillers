@@ -17,7 +17,7 @@ async function fillProducts() {
     for(let row of table.data){
         let category = await Category.findOne({name: row[1]})
         if(row[0] !== undefined && category) {
-            console.log(category._id)
+            console.log(row[3])
             let product = new Product({
                 image: 'https://be-online.kz/images/' + row[0],
                 name: row[3],
@@ -56,8 +56,9 @@ async function fillCategories() {
             name: c.name,
             subcategories: c.subcategories
         })
+        console.log(c.name)
     }
 }
 
-fillCategories()
-// fillProducts()
+// fillCategories()
+fillProducts()
