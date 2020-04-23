@@ -19,7 +19,7 @@ async function fillProducts() {
         if(row[0] !== undefined && category) {
             console.log(category._id)
             let product = new Product({
-                image: row[0],
+                image: 'https://be-online.kz/images/' + row[0],
                 name: row[3],
                 subcategory: row[2],
                 price: row[11],
