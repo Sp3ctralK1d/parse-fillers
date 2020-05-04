@@ -8,7 +8,7 @@ mongoose.connect('mongodb://localhost:27017/magazinus', {
 const Product = require('./models/Product')
 const Category = require('./models/Category')
 
-const obj = xlsx.parse('./table.xlsx')
+const obj = xlsx.parse('./new-table.xlsx')
 let table = obj.find(o => o.name == 'База')
 
 let counter = 0
@@ -24,7 +24,11 @@ async function fillProducts() {
                 subcategory: row[2],
                 price: row[11],
                 category: category._id,
-                quantity: 1
+                quantity: 1,
+                supplier: row[4],
+                shopname: row[5],
+                quantityOnShop: row[6],
+                unit: row[7]
             })
             product.save()
         }
@@ -41,7 +45,7 @@ async function fillCategories() {
             subcategories: [row[2]]
         }
 
-        if(!cats.find(c => c.name == cat.name) && row[0]!=undefined){
+        if(!cats.find(c => c.name == cat.name) && row[0]!=undefined && row[0] != 'Picture №'){
             cats.push(cat)
         }else if(cats.find(c => c.name == cat.name)){
             let i = cats.findIndex(c => c.name == cat.name)
@@ -60,5 +64,9 @@ async function fillCategories() {
     }
 }
 
-//fillCategories()
-fillProducts()
+async function doTheWork() {
+    await fillCategories()
+    await fillProducts()
+}
+
+doTheWork()
