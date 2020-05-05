@@ -40,21 +40,22 @@ async function fillCategories() {
     let cats = []
 
     for(let row of table.data){
-        let cat = {
-            name: row[1],
-            subcategories: [row[2]]
-        }
-
-        if(!cats.find(c => c.name == cat.name) && row[0]!=undefined && row[0] != 'Picture №'){
-            cats.push(cat)
-        }else if(cats.find(c => c.name == cat.name)){
-            let i = cats.findIndex(c => c.name == cat.name)
-            if(!cats[i].subcategories.find(s=> s == row[2])) {
-                cats[i].subcategories.push(row[2])
+        if(row[0] !== undefined){
+            let cat = {
+                name: row[1],
+                subcategories: [row[2]]
             }
-        }
+
+            if(!cats.find(c => c.name == cat.name) && row[0]!=undefined && row[0] != 'Picture №'){
+                cats.push(cat)
+            }else if(cats.find(c => c.name == cat.name)){
+                let i = cats.findIndex(c => c.name == cat.name)
+                if(!cats[i].subcategories.find(s=> s == row[2])) {
+                    cats[i].subcategories.push(row[2])
+                }
+            }
+        }        
     }        
-        
     for (let c of cats) {
         let category = Category.create({
             name: c.name,
